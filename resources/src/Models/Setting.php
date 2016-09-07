@@ -6,7 +6,7 @@
  * Time: 23:37
  */
 
-namespace GeniusTS\Preferences;
+namespace GeniusTS\Preferences\Models;
 
 
 use Illuminate\Database\Query\Builder;
