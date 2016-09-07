@@ -1,0 +1,19 @@
+{
+    "name": "geniusts/preferences",
+    "authors": [
+        {
+            "name": "Abdul-Kader Zein-Eddin",
+            "email": "aboudeh1987@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6",
+        "illuminate/Database": "~5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "GeniusTS\\Preferences\\": "src/"
+        }
+    }
+}
