@@ -20,12 +20,12 @@ class PreferencesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        $this->app->alias(PreferencesManager::class, 'Preferences');
+        $this->app->alias(PreferencesManager::class, 'Preferences');
 
-//        $this->app->singleton(PreferencesManager::class, function ()
-//        {
-//            return new PreferencesManager();
-//        });
+        $this->app->singleton(PreferencesManager::class, function ()
+        {
+            return new PreferencesManager();
+        });
     }
 
     /**
@@ -35,9 +35,9 @@ class PreferencesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //        View::composer('geniusts_preferences::settings', function ($view)
-//        {
-//            return $view->with('$preferences', $this->app['preferences']);
-//        });
+        View::composer('geniusts_preferences::settings', function ($view)
+        {
+            return $view->with('$preferences', $this->app['preferences']);
+        });
     }
 }
