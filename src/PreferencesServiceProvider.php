@@ -54,7 +54,8 @@ class PreferencesServiceProvider extends ServiceProvider
     {
         View::composer('geniusts_preferences::settings', function ($view)
         {
-            return $view->with('preferences', $this->app['preferences']);
+            return $view->with('preferences', $this->app['preferences'])
+                ->with('version', $this->app->version());
         });
     }
 }
