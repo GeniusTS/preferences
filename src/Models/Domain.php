@@ -4,6 +4,7 @@ namespace GeniusTS\Preferences\Models;
 
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\View;
 
 /**
  * Class Domain
@@ -38,14 +39,21 @@ class Domain
     protected $elements;
 
     /**
+     * @var View
+     */
+    protected $view;
+
+    /**
      * Tab constructor.
      *
-     * @param      $key
-     * @param null $label
+     * @param                                  $key
+     * @param \Illuminate\Support\Facades\View $view
+     * @param null                             $label
      */
-    public function __construct($key, $label = null)
+    public function __construct($key, View $view, $label = null)
     {
         $this->key = $key;
+        $this->view = $view;
         $this->label = $label;
         $this->elements = new Collection();
     }

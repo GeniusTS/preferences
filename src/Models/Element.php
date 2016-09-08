@@ -33,21 +33,14 @@ class Element
     protected $rules;
 
     /**
-     * @var View
-     */
-    protected $view;
-
-    /**
      * Element constructor.
      *
      * @param string $name
-     * @param View   $view
      * @param null   $rules
      */
-    public function __construct($name, View $view, $rules = null)
+    public function __construct($name, $rules = null)
     {
         $this->name = $name;
-        $this->view = $view;
 
         if (is_string($rules))
         {
