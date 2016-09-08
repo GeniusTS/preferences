@@ -6,6 +6,7 @@ namespace GeniusTS\Preferences;
 use Illuminate\Support\Collection;
 use GeniusTS\Exceptions\DomainNotExist;
 use GeniusTS\Preferences\Models\Domain;
+use GeniusTS\Exceptions\DomainAlreadyExist;
 
 class PreferencesManager
 {
@@ -30,10 +31,15 @@ class PreferencesManager
      * @param \GeniusTS\Preferences\Models\Domain $domain
      *
      * @return $this
+     * @throws \GeniusTS\Exceptions\DomainAlreadyExist
      */
     public function addDomain(Domain $domain)
     {
-        $this->checkNameSpace($domain->key);
+        if ($this->checkNameSpace($domain->key))
+        {
+            throw new DomainAlreadyExist();
+        }
+
         $this->domains->push($domain);
 
         return $this;
@@ -70,11 +76,15 @@ class PreferencesManager
      *
      * @param string $key
      *
-     * @return Domain
+     * @return \GeniusTS\Preferences\Models\Domain
+     * @throws \GeniusTS\Exceptions\DomainNotExist
      */
     public function getDomain($key)
     {
-        $this->checkNameSpace($key);
+        if (!$this->checkNameSpace($key))
+        {
+            throw new DomainNotExist();
+        }
 
         return $this->domains->first(function ($domain) use ($key)
         {
@@ -92,7 +102,7 @@ class PreferencesManager
     {
         if (!$this->domains->where('key', $key)->count())
         {
-            throw new DomainNotExist();
+            return false;
         }
 
         return true;
