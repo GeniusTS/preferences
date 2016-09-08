@@ -83,6 +83,7 @@ class Domain
      */
     public function addElement(Element $element)
     {
+        $element->setNamespace($this->key);
         $this->elements->push($element);
 
         return $this;

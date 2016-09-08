@@ -40,14 +40,12 @@ class Element
     /**
      * Element constructor.
      *
-     * @param string $namespace
      * @param string $name
      * @param View   $view
      * @param null   $rules
      */
-    public function __construct($namespace, $name, View $view, $rules = null)
+    public function __construct($name, View $view, $rules = null)
     {
-        $this->namespace = $namespace;
         $this->name = $name;
         $this->view = $view;
 
@@ -55,6 +53,20 @@ class Element
         {
             $this->rules = $rules;
         }
+    }
+
+    /**
+     * Set the name space of element
+     *
+     * @param string $namespace
+     *
+     * @return $this
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+
+        return $this;
     }
 
     /**
