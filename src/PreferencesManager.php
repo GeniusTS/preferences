@@ -13,7 +13,7 @@ class PreferencesManager
     /**
      * @var Collection
      */
-    protected $namespaces;
+    protected $domains;
 
     /**
      * PreferencesManager constructor.
@@ -21,7 +21,7 @@ class PreferencesManager
     public function __construct()
     {
         $this->rules = new Collection();
-        $this->namespaces = new Collection();
+        $this->domains = new Collection();
     }
 
     /**
@@ -34,7 +34,7 @@ class PreferencesManager
     public function addDomain(Domain $domain)
     {
         $this->checkNameSpace($domain->key);
-        $this->namespaces->push($domain);
+        $this->domains->push($domain);
 
         return $this;
     }
@@ -57,7 +57,7 @@ class PreferencesManager
             $key = $domain;
         }
 
-        $this->namespaces->reject(function ($value) use ($key)
+        $this->domains->reject(function ($value) use ($key)
         {
             return $value->key === $key;
         });
@@ -76,7 +76,7 @@ class PreferencesManager
     {
         $this->checkNameSpace($key);
 
-        return $this->namespaces->first(function ($domain) use ($key)
+        return $this->domains->first(function ($domain) use ($key)
         {
             return $domain->key === $key;
         });
@@ -90,7 +90,7 @@ class PreferencesManager
      */
     protected function checkNameSpace($key)
     {
-        if (!$this->namespaces->where('key', $key)->count())
+        if (!$this->domains->where('key', $key)->count())
         {
             throw new DomainNotExist();
         }
