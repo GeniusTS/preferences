@@ -21,6 +21,22 @@ class PreferencesServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->alias(PreferencesManager::class, 'Preferences');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'geniusts_preferences');
+
+        if (method_exists($this, 'loadMigrationsFrom'))
+        {
+            $this->loadMigrationsFrom(__DIR__ . '/../resources/migrations');
+        }
+        else
+        {
+            $this->publishes([
+                __DIR__ . '/../resources/migrations' => database_path('migrations'),
+            ], 'migrations');
+        }
+
+        $this->publishes([
+            __DIR__ . '/../resources/views' => base_path('resources/views/vendor'),
+        ], 'views');
 
         $this->app->singleton(PreferencesManager::class, function ()
         {
