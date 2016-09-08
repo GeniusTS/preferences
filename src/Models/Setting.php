@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property integer        $id
  * @property string         $slug
+ * @property string         $domain
  * @property string         $value
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
@@ -44,6 +45,7 @@ class Setting extends Model
      */
     protected $fillable = [
         'slug',
+        'domain',
         'value',
     ];
 
@@ -55,22 +57,34 @@ class Setting extends Model
     protected $hidden = [];
 
     /**
-     * @param $slug
+     * Find a setting model by slug and domain
      *
-     * @return Setting|null
+     * @param $slug
+     * @param $domain
+     *
+     * @return \GeniusTS\Preferences\Models\Setting|null
      */
-    public static function findBySlug($slug)
+    public static function findBySlug($slug, $domain)
     {
-        return self::where('slug', $slug)->first();
+        return self::where('slug', $slug)
+            ->where('domain', $domain)
+            ->first();
     }
 
     /**
-     * @param $slug
+     * Find a setting model by slug and domain
+     * or return a new instance if not exit
      *
-     * @return Setting|null
+     * @param $slug
+     * @param $domain
+     *
+     * @return \GeniusTS\Preferences\Models\Setting|null
      */
-    public static function findBySlugOrNew($slug)
+    public static function findBySlugOrNew($slug, $domain)
     {
-        return self::where('slug', $slug)->firstOrNew(['slug' => $slug]);
+        return self::firstOrNew([
+            'slug'   => $slug,
+            'domain' => $domain,
+        ]);
     }
 }
