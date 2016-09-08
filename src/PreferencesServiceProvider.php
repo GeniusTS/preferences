@@ -21,23 +21,11 @@ class PreferencesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->alias(PreferencesManager::class, 'Preferences');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'geniusts_preferences');
 
-        if (method_exists($this, 'loadMigrationsFrom'))
-        {
-            $this->loadMigrationsFrom(__DIR__ . '/../resources/migrations');
-        }
-        else
-        {
-            $this->publishes([
-                __DIR__ . '/../resources/migrations' => database_path('migrations'),
-            ], 'migrations');
-        }
+        $this->publishMigrations();
 
-        $this->publishes([
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/geniusts_preferences'),
-        ], 'views');
+        $this->publishViews();
 
         $this->app->singleton(PreferencesManager::class, function ()
         {
@@ -57,5 +45,32 @@ class PreferencesServiceProvider extends ServiceProvider
             return $view->with('preferences', $this->app['preferences'])
                 ->with('version', $this->app->version());
         });
+    }
+
+    /**
+     * Publish migration files
+     */
+    private function publishMigrations()
+    {
+        if (method_exists($this, 'loadMigrationsFrom'))
+        {
+            $this->loadMigrationsFrom(__DIR__ . '/../resources/migrations');
+        }
+        else
+        {
+            $this->publishes([
+                __DIR__ . '/../resources/migrations' => database_path('migrations'),
+            ], 'migrations');
+        }
+    }
+
+    /**
+     * Publish views
+     */
+    private function publishViews()
+    {
+        $this->publishes([
+            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/geniusts_preferences'),
+        ], 'views');
     }
 }
