@@ -25,9 +25,7 @@
                  class="tab-pane {{ $x === 0 ? 'active' : '' }}"
                  id="{{ $domain->key }}"
             >
-                @foreach($domain->elements as $element)
-                    {!! $element->view->render() !!}
-                @endforeach
+                {!! $domain->view->render() !!}
             </div>
             <?php $x++ ?>
         @endforeach

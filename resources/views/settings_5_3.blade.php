@@ -22,9 +22,7 @@
                  class="tab-pane {{ $loop->first ? 'active' : '' }}"
                  id="{{ $domain->key }}"
             >
-                @foreach($domain->elements as $element)
-                    {!! $element->view->render() !!}
-                @endforeach
+                {!! $domain->view->render() !!}
             </div>
         @endforeach
     </div>
