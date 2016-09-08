@@ -107,4 +107,20 @@ class PreferencesManager
 
         return true;
     }
+
+    /**
+     * @param $property
+     *
+     * @return null
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property))
+        {
+            return $this->{$property};
+        }
+
+        return null;
+    }
+
 }
