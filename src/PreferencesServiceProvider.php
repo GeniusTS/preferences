@@ -3,6 +3,7 @@
 namespace GeniusTS\Preferences;
 
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -35,7 +36,7 @@ class PreferencesServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor'),
+            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/geniusts_preferences'),
         ], 'views');
 
         $this->app->singleton(PreferencesManager::class, function ()
