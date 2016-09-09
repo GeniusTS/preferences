@@ -74,7 +74,7 @@ and include the `geniusts_preferences::settings` view.
 1. ***create a view of the settings:***
 Ex.: `settings/general.blade.php`
 
-
+```html
     <div class="row">
         <div class="col-xs-12">
             <div class="form-group">
@@ -91,6 +91,7 @@ Ex.: `settings/general.blade.php`
             </div>
         </div>
     </div>
+```
 
 2. ***Register the tab to PreferencesManager*** 
 
