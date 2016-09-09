@@ -1,5 +1,14 @@
 {
     "name": "geniusts/preferences",
+    "description": "Very easy way to generate a preferences page for applications that have multiple components and packages.",
+    "keywords": [
+        "preferences",
+        "settings",
+        "configurations",
+        "laravel",
+        "laravel"
+    ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Abdul-Kader Zein-Eddin",
