@@ -6,12 +6,11 @@
             "email": "aboudeh1987@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.6",
-        "illuminate/Database": "~5.3",
-        "illuminate/routing": "^5.3",
-        "illuminate/view": "^5.3"
+        "illuminate/Database": "~5.2",
+        "illuminate/routing": "^5.2",
+        "illuminate/view": "^5.2"
     },
     "autoload": {
         "psr-4": {
