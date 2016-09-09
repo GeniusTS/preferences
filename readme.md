@@ -86,7 +86,7 @@ Ex.: `settings/general.blade.php`
     
                     <input class="form-control" 
                            name="project_name"
-                           value="{{ \GeniusTS\Core\Models\Setting::findBySlugOrNew('project_name')->value }}">
+                           value="{{ \GeniusTS\Preferences\Models\Setting::findBySlugOrNew('project_name')->value }}">
                 </div>
             </div>
         </div>
