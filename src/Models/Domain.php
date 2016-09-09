@@ -3,8 +3,8 @@
 namespace GeniusTS\Preferences\Models;
 
 
+use Illuminate\View\View;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\View;
 
 /**
  * Class Domain
@@ -47,7 +47,7 @@ class Domain
      * Tab constructor.
      *
      * @param                                  $key
-     * @param \Illuminate\Support\Facades\View $view
+     * @param View $view
      * @param null                             $label
      */
     public function __construct($key, View $view, $label = null)
