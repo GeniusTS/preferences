@@ -1,4 +1,4 @@
-<form method="POST" action="{{ action('\GeniusTS\Preferences\Controllers\SettingsController@update') }}">
+<form method="POST" action="{{ action('SettingsController@update') }}">
     <input type="hidden" name="_method" value="PATCH" />
 
     @if(version_compare($version, '5.3.0') < 0)
