@@ -51,9 +51,9 @@ class Domain
     /**
      * Tab constructor.
      *
-     * @param                                  $key
-     * @param View $view
-     * @param null                             $label
+     * @param string $key
+     * @param View   $view
+     * @param null   $label
      */
     public function __construct($key, View $view, $label = null)
     {
