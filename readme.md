@@ -95,7 +95,7 @@ Ex.: `settings/general.blade.php`
 
 2. ***Register the tab to PreferencesManager*** 
 
-
+```php
     use GeniusTS\Preferences\Models\Domain;
     use GeniusTS\Preferences\Models\Element;
     
@@ -110,7 +110,8 @@ Ex.: `settings/general.blade.php`
     // register the Domain to the Preferences manager
     $manager = resolve('preferences');
     $manager->addDomain($domain);
-    
+```
+ 
 > You can register the `domains` in the `boot` function of your
  package service provider.
 
