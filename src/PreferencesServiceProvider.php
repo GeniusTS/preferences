@@ -24,8 +24,8 @@ class PreferencesServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'geniusts_preferences');
 
         $this->publishMigrations();
-
         $this->publishViews();
+        $this->publishController();
 
         $this->app->singleton(PreferencesManager::class, function ()
         {
@@ -72,5 +72,15 @@ class PreferencesServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('resources/views/vendor/geniusts_preferences'),
         ], 'views');
+    }
+
+    /**
+     * Publish the default controller
+     */
+    private function publishController()
+    {
+        $this->publishes([
+            __DIR__ . '/../resources/controllers/SettingsController.php' => base_path('app/Http/Controllers'),
+        ], 'controller');
     }
 }
