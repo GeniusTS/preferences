@@ -44,6 +44,11 @@ class Domain
     protected $view;
 
     /**
+     * @var array
+     */
+    protected $rules = [];
+
+    /**
      * Tab constructor.
      *
      * @param                                  $key
@@ -140,12 +145,12 @@ class Domain
      */
     public function getRules()
     {
-        return $this->elements->map(function (Element $element)
+        $this->elements->map(function (Element $element)
         {
-            return [
-                "{$this->key}.{$element->name}" => 'rules',
-            ];
-        })->toArray();
+            $this->rules[$element->name] = $element->rules;
+        });
+
+        return $this->rules;
     }
 
     /**
