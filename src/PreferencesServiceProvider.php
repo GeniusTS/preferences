@@ -27,7 +27,7 @@ class PreferencesServiceProvider extends ServiceProvider
         $this->publishViews();
         $this->publishController();
 
-        $this->app->singleton(PreferencesManager::class, function ()
+        $this->app->singleton('preferences', function ()
         {
             return new PreferencesManager();
         });
