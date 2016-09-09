@@ -80,7 +80,7 @@ class PreferencesServiceProvider extends ServiceProvider
     private function publishController()
     {
         $this->publishes([
-            __DIR__ . '/../resources/controllers/SettingsController.php' => base_path('app/Http/Controllers'),
+            __DIR__ . '/../resources/controllers' => base_path('app/Http/Controllers'),
         ], 'controller');
     }
 }
