@@ -4,7 +4,10 @@ namespace GeniusTS\Preferences;
 
 
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\ServiceProvider;
+use GeniusTS\Preferences\Models\Setting;
 
 /**
  * Class PreferencesServiceProvider
@@ -26,6 +29,7 @@ class PreferencesServiceProvider extends ServiceProvider
         $this->publishMigrations();
         $this->publishViews();
         $this->publishController();
+        $this->registerSettings();
 
         $this->app->singleton('preferences', function ()
         {
@@ -50,7 +54,7 @@ class PreferencesServiceProvider extends ServiceProvider
     /**
      * Publish migration files
      */
-    private function publishMigrations()
+    protected function publishMigrations()
     {
         if (method_exists($this, 'loadMigrationsFrom'))
         {
@@ -67,7 +71,7 @@ class PreferencesServiceProvider extends ServiceProvider
     /**
      * Publish views
      */
-    private function publishViews()
+    protected function publishViews()
     {
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('resources/views/vendor/geniusts_preferences'),
@@ -77,10 +81,29 @@ class PreferencesServiceProvider extends ServiceProvider
     /**
      * Publish the default controller
      */
-    private function publishController()
+    protected function publishController()
     {
         $this->publishes([
             __DIR__ . '/../resources/controllers' => base_path('app/Http/Controllers'),
         ], 'controller');
+    }
+
+    /**
+     * Register Settings
+     */
+    protected function registerSettings()
+    {
+        try
+        {
+            $models = Setting::all();
+
+            foreach ($models as $model)
+            {
+                Config::set("preferences.{$model->domain}.{$model->slug}", $model->value);
+            }
+        }
+        catch (QueryException $e)
+        {
+        }
     }
 }
