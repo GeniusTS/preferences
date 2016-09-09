@@ -7,11 +7,8 @@ use GeniusTS\Preferences\Models\Domain;
 use GeniusTS\Preferences\Models\Element;
 use GeniusTS\Preferences\Models\Setting;
 use GeniusTS\Preferences\PreferencesManager;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Symfony\Component\HttpFoundation\Response;
 use GeniusTS\Preferences\Requests\SettingsRequest;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
  * Class SettingsController
