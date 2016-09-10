@@ -30,11 +30,6 @@ class PreferencesServiceProvider extends ServiceProvider
         $this->publishViews();
         $this->publishController();
         $this->registerSettings();
-
-        $this->app->singleton('preferences', function ()
-        {
-            return new PreferencesManager();
-        });
     }
 
     /**
@@ -44,6 +39,11 @@ class PreferencesServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->singleton('preferences', function ()
+        {
+            return new PreferencesManager();
+        });
+
         View::composer('geniusts_preferences::settings', function ($view)
         {
             return $view->with('preferences', $this->app['preferences'])
