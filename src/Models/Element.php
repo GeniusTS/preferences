@@ -36,9 +36,9 @@ class Element
      * Element constructor.
      *
      * @param string $name
-     * @param null   $rules
+     * @param string $rules
      */
-    public function __construct($name, $rules = null)
+    public function __construct($name, $rules = '')
     {
         $this->name = $name;
 
