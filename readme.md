@@ -108,7 +108,7 @@ Ex.: `settings/general.blade.php`
     $domain->addElement(new Element('project_name', 'required|max:255'));
     
     // register the Domain to the Preferences manager
-    $manager = resolve('preferences');
+    $manager = resolve('preferences'); // or app('preferences') for versions older than 5.3
     $manager->addDomain($domain);
 ```
  
