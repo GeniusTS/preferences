@@ -2,6 +2,7 @@
 
 namespace GeniusTS\Preferences\Controllers;
 
+use Illuminate\Routing\Controller;
 use GeniusTS\Preferences\Models\Domain;
 use GeniusTS\Preferences\Models\Element;
 use GeniusTS\Preferences\Models\Setting;
@@ -17,7 +18,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  *
  * @package GeniusTS\Preferences
  */
-abstract class SettingsController
+abstract class SettingsController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
