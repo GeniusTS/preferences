@@ -36,7 +36,7 @@ class SettingsRequest extends FormRequest
      */
     public function rules()
     {
-        $preferences = resolve('preferences');
+        $preferences = app('preferences');
 
         $preferences->domains
             ->map(function (Domain $domain)
