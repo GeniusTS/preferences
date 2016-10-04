@@ -5,6 +5,7 @@ namespace GeniusTS\Preferences;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Config;
+use Doctrine\DBAL\Driver\PDOException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\ServiceProvider;
 use GeniusTS\Preferences\Models\Setting;
@@ -101,6 +102,9 @@ class PreferencesServiceProvider extends ServiceProvider
             {
                 Config::set("preferences.{$model->domain}.{$model->slug}", $model->value);
             }
+        }
+        catch(PDOException $e)
+        {
         }
         catch (QueryException $e)
         {
