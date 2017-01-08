@@ -135,7 +135,7 @@ class Domain
      */
     public function getDisplayedName()
     {
-        return $this->label ?: $this->key;
+        return trans($this->label ?: $this->key);
     }
 
     /**
