@@ -101,6 +101,7 @@ Ex.: `settings/general.blade.php`
     
     // Create a settings Domain
     // Domain(string $key, View $view, string $label)
+    // you can use label like 'labels.general', because the view execute "trans" function
     $domain = new Domain('general', view('settings.general'), 'General');
     
     // Add the inputs names and validation rules
