@@ -5,7 +5,7 @@ namespace GeniusTS\Preferences\Exceptions;
 
 use Exception;
 
-class DomainNotExist extends Exception
+class DomainAlreadyExist extends Exception
 {
 
 }

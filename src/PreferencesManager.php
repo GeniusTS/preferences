@@ -4,9 +4,9 @@ namespace GeniusTS\Preferences;
 
 
 use Illuminate\Support\Collection;
-use GeniusTS\Exceptions\DomainNotExist;
 use GeniusTS\Preferences\Models\Domain;
-use GeniusTS\Exceptions\DomainAlreadyExist;
+use GeniusTS\Preferences\Exceptions\DomainNotExist;
+use GeniusTS\Preferences\Exceptions\DomainAlreadyExist;
 
 class PreferencesManager
 {
