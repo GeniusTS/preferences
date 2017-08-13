@@ -2,7 +2,9 @@
 
 namespace GeniusTS\Preferences\Controllers;
 
+
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Event;
 use GeniusTS\Preferences\Models\Domain;
 use GeniusTS\Preferences\Models\Element;
 use GeniusTS\Preferences\Models\Setting;
@@ -10,7 +12,9 @@ use GeniusTS\Preferences\PreferencesManager;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Symfony\Component\HttpFoundation\Response;
 use GeniusTS\Preferences\Requests\SettingsRequest;
+use GeniusTS\Preferences\Events\PreferencesUpdated;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use GeniusTS\Preferences\Events\BeforeUpdatePreference;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 /**
@@ -20,6 +24,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
  */
 abstract class SettingsController extends Controller
 {
+
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
@@ -44,6 +49,8 @@ abstract class SettingsController extends Controller
      */
     public function update(SettingsRequest $request)
     {
+        Event::fire(new BeforeUpdatePreference);
+
         /** @var Domain $domain */
         foreach ($this->preferences->domains as $domain)
         {
@@ -55,6 +62,8 @@ abstract class SettingsController extends Controller
                 $model->save();
             }
         }
+
+        Event::fire(new PreferencesUpdated);
 
         return $this->handleSuccessResponse();
     }
