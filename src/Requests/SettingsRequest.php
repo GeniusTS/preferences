@@ -41,7 +41,7 @@ class SettingsRequest extends FormRequest
         $preferences->domains
             ->map(function (Domain $domain)
             {
-                $this->rules = array_merge($this->rules, $domain->getRules());
+                $this->rules = array_merge($this->rules, $domain->getRules()->toArray());
             });
 
         return $this->rules;
