@@ -57,6 +57,38 @@ class Setting extends Model
     protected $hidden = [];
 
     /**
+     * Set the value attribute
+     *
+     * @param $value
+     */
+    public function setValueAttribute($value)
+    {
+        if (is_array($value))
+        {
+            $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+        }
+
+        $this->attributes['value'] = $value;
+    }
+
+    /**
+     * Get the value property
+     *
+     * @return mixed
+     */
+    public function getValueAttribute()
+    {
+        $value = json_decode($this->attributes['value'], true);
+
+        if (json_last_error() === JSON_ERROR_NONE)
+        {
+            return $value;
+        }
+
+        return $this->attributes['value'];
+    }
+
+    /**
      * Find a setting model by slug and domain
      *
      * @param $slug
