@@ -5,8 +5,7 @@ namespace GeniusTS\Preferences;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Config;
-use Doctrine\DBAL\Driver\PDOException;
-use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use GeniusTS\Preferences\Models\Setting;
 
@@ -40,13 +39,11 @@ class PreferencesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('preferences', function ()
-        {
+        $this->app->singleton('preferences', function () {
             return new PreferencesManager();
         });
 
-        View::composer('geniusts_preferences::settings', function ($view)
-        {
+        View::composer('geniusts_preferences::settings', function ($view) {
             return $view->with('preferences', $this->app['preferences'])
                 ->with('version', $this->app->version());
         });
@@ -94,20 +91,21 @@ class PreferencesServiceProvider extends ServiceProvider
      */
     protected function registerSettings()
     {
-        try
+        if ($this->app->configurationIsCached())
         {
-            $models = Setting::all();
+            return;
+        }
 
-            foreach ($models as $model)
-            {
-                Config::set("preferences.{$model->domain}.{$model->slug}", $model->value);
-            }
-        }
-        catch(PDOException $e)
+        if (! Schema::hasTable('settings'))
         {
+            return;
         }
-        catch (QueryException $e)
+
+        $models = Setting::all();
+
+        foreach ($models as $model)
         {
+            Config::set("preferences.{$model->domain}.{$model->slug}", $model->value);
         }
     }
 }

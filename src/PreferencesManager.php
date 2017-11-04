@@ -21,8 +21,7 @@ class PreferencesManager
      */
     public function __construct()
     {
-        $this->rules = new Collection();
-        $this->domains = new Collection();
+        $this->domains = new Collection;
     }
 
     /**
@@ -31,7 +30,7 @@ class PreferencesManager
      * @param \GeniusTS\Preferences\Models\Domain $domain
      *
      * @return $this
-     * @throws \GeniusTS\Exceptions\DomainAlreadyExist
+     * @throws \GeniusTS\Preferences\Exceptions\DomainAlreadyExist
      */
     public function addDomain(Domain $domain)
     {
@@ -77,7 +76,7 @@ class PreferencesManager
      * @param string $key
      *
      * @return \GeniusTS\Preferences\Models\Domain
-     * @throws \GeniusTS\Exceptions\DomainNotExist
+     * @throws \GeniusTS\Preferences\Exceptions\DomainNotExist
      */
     public function getDomain($key)
     {
