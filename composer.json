@@ -22,6 +22,11 @@
         "illuminate/view": "^5.2",
         "doctrine/dbal": "^2.5"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
     "autoload": {
         "psr-4": {
             "GeniusTS\\Preferences\\": "src/"
