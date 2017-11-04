@@ -65,7 +65,7 @@ class Setting extends Model
     {
         if (is_array($value))
         {
-            $value = json_encode($value, JSON_UNESCAPED_UNICODE);
+            $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
         }
 
         $this->attributes['value'] = $value;
