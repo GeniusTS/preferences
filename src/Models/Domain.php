@@ -44,9 +44,9 @@ class Domain
     protected $view;
 
     /**
-     * @var array
+     * @var Collection
      */
-    protected $rules = [];
+    protected $rules;
 
     /**
      * Tab constructor.
@@ -60,7 +60,8 @@ class Domain
         $this->key = $key;
         $this->view = $view;
         $this->label = $label;
-        $this->elements = new Collection();
+        $this->elements = new Collection;
+        $this->rules = new Collection;
     }
 
     /**
@@ -120,8 +121,7 @@ class Domain
             $key = $element;
         }
 
-        $this->elements->reject(function ($value) use ($key)
-        {
+        $this->elements->reject(function ($value) use ($key) {
             return $value->name === $key;
         });
 
@@ -141,13 +141,12 @@ class Domain
     /**
      * return the inputs rules
      *
-     * @return array
+     * @return Collection
      */
     public function getRules()
     {
-        $this->elements->map(function (Element $element)
-        {
-            $this->rules[$element->name] = $element->rules;
+        $this->elements->map(function (Element $element) {
+            $this->rules->merge($element->rules);
         });
 
         return $this->rules;

@@ -44,6 +44,10 @@ class Element
 
         if (is_string($rules))
         {
+            $this->rules = [$name => $rules];
+        }
+        elseif (is_array($rules))
+        {
             $this->rules = $rules;
         }
     }
