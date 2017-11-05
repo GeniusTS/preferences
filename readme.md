@@ -22,7 +22,7 @@ functions of laravel.
 ```json
 {
     "require": {
-        "geniusts/preferences": "^1.0"
+        "geniusts/preferences": "~1.1.0"
     }
 }
 ```
@@ -105,8 +105,12 @@ Ex.: `settings/general.blade.php`
     $domain = new Domain('general', view('settings.general'), 'General');
     
     // Add the inputs names and validation rules
-    // Element(string $name, string $rules)
+    // Element(string $name, mixed $rules)
     $domain->addElement(new Element('project_name', 'required|max:255'));
+    
+    // OR for array values
+    $domain->addElement(new Element('options', ['options' => 'array', 'options.*' => 'required|integer']));
+    
     
     // register the Domain to the Preferences manager
     $manager = resolve('preferences'); // or app('preferences') for versions older than 5.3
