@@ -42,13 +42,13 @@ class Element
     {
         $this->name = $name;
 
-        if (is_string($rules))
-        {
-            $this->rules = [$name => $rules];
-        }
-        elseif (is_array($rules))
+        if (is_array($rules))
         {
             $this->rules = $rules;
+        }
+        else
+        {
+            $this->rules = [$name => $rules];
         }
     }
 
