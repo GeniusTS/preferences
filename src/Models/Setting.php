@@ -78,6 +78,11 @@ class Setting extends Model
      */
     public function getValueAttribute()
     {
+        if (! isset($this->attributes['value']))
+        {
+            return null;
+        }
+
         $value = json_decode($this->attributes['value'], true);
 
         if (json_last_error() === JSON_ERROR_NONE)
