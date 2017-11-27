@@ -146,7 +146,7 @@ class Domain
     public function getRules()
     {
         $this->elements->map(function (Element $element) {
-            $this->rules->merge($element->rules);
+            $this->rules = $this->rules->merge($element->rules);
         });
 
         return $this->rules;
