@@ -62,8 +62,7 @@ class PreferencesManager
             $key = $domain;
         }
 
-        $this->domains->reject(function ($value) use ($key)
-        {
+        $this->domains->reject(function ($value) use ($key) {
             return $value->key === $key;
         });
 
@@ -80,13 +79,12 @@ class PreferencesManager
      */
     public function getDomain($key)
     {
-        if (!$this->checkNameSpace($key))
+        if (! $this->checkNameSpace($key))
         {
             throw new DomainNotExist();
         }
 
-        return $this->domains->first(function ($domain) use ($key)
-        {
+        return $this->domains->first(function ($domain) use ($key) {
             return $domain->key === $key;
         });
     }
@@ -95,11 +93,10 @@ class PreferencesManager
      * @param $key
      *
      * @return bool
-     * @throws \GeniusTS\Exceptions\DomainNotExist
      */
     protected function checkNameSpace($key)
     {
-        if (!$this->domains->where('key', $key)->count())
+        if (! $this->domains->where('key', $key)->count())
         {
             return false;
         }

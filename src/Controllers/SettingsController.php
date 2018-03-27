@@ -4,7 +4,9 @@ namespace GeniusTS\Preferences\Controllers;
 
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Artisan;
 use GeniusTS\Preferences\Models\Domain;
 use GeniusTS\Preferences\Models\Element;
 use GeniusTS\Preferences\Models\Setting;
@@ -49,6 +51,23 @@ abstract class SettingsController extends Controller
      */
     public function update(SettingsRequest $request)
     {
+        $this->process($request);
+
+        if (App::configurationIsCached())
+        {
+            Artisan::call('config:cache');
+        }
+
+        return $this->handleSuccessResponse();
+    }
+
+    /**
+     * Saving settings process
+     *
+     * @param \GeniusTS\Preferences\Requests\SettingsRequest $request
+     */
+    protected function process(SettingsRequest $request)
+    {
         Event::fire(new BeforeUpdatePreference);
 
         /** @var Domain $domain */
@@ -64,8 +83,6 @@ abstract class SettingsController extends Controller
         }
 
         Event::fire(new PreferencesUpdated);
-
-        return $this->handleSuccessResponse();
     }
 
     /**
