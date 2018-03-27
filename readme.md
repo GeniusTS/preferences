@@ -52,6 +52,8 @@ No need to publish the migrations files just run migrate command to execute the 
 
     php artisan migrate
 
+> If you want to use `DB` transaction while saving the data, add `protected $transactions = true;` to `SettingsController`
+
 4. ***Routes and views***
 
 Add two routes to you routes file:
@@ -86,7 +88,7 @@ Ex.: `settings/general.blade.php`
     
                     <input class="form-control" 
                            name="project_name"
-                           value="{{ \GeniusTS\Preferences\Models\Setting::findBySlugOrNew('project_name', 'general')->value }}">
+                           value="{{ old('project_name', config('preferences.general.project_name')) }}">
                 </div>
             </div>
         </div>
