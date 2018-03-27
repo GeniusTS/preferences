@@ -4,6 +4,7 @@ namespace GeniusTS\Preferences\Controllers;
 
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Artisan;
@@ -30,6 +31,13 @@ abstract class SettingsController extends Controller
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     /**
+     * Use transactions
+     *
+     * @var bool
+     */
+    protected $transactions = false;
+
+    /**
      * @var PreferencesManager
      */
     protected $preferences;
@@ -51,7 +59,16 @@ abstract class SettingsController extends Controller
      */
     public function update(SettingsRequest $request)
     {
-        $this->process($request);
+        if ($this->transactions)
+        {
+            DB::transaction(function () use ($request) {
+                $this->process($request);
+            });
+        }
+        else
+        {
+            $this->process($request);
+        }
 
         if (App::configurationIsCached())
         {
