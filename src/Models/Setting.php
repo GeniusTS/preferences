@@ -115,7 +115,7 @@ class Setting extends Model
      * @param $slug
      * @param $domain
      *
-     * @return \GeniusTS\Preferences\Models\Setting|null
+     * @return \GeniusTS\Preferences\Models\Setting
      */
     public static function findBySlugOrNew($slug, $domain)
     {
