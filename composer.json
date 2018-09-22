@@ -24,7 +24,12 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.x-dev"
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "GeniusTS\\Preferences\\PreferencesServiceProvider"
+            ]
         }
     },
     "autoload": {
