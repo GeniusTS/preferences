@@ -31,11 +31,14 @@ and run:
 
 2. ***Service Provider***
 
-Add the package to your application service providers in `config/app.php` file.
+- If you are using Laravel >=5.5 and the `auto-discover` is enabled, no need to do anything.
+- If your Laravel <5.5 or you disabled `auto-discover` add the ServiceProvider to the providers array in `config/app.php`
 
 ```php
     GeniusTS\Preferences\PreferencesServiceProvider::class,
 ```
+
+**Note:** If you are using Laravel 5.5 or greater no need to add it, It will auto discove
 
 3. ***Controller And Migrations***
 
