@@ -95,6 +95,14 @@ class PreferencesServiceProvider extends ServiceProvider
         {
             return;
         }
+        
+        try {
+            $pdo = \DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            // this usually applicable when first installing the dependencies without database being set via .env
+            return;
+        }
+
 
         if (! Schema::hasTable('settings'))
         {
