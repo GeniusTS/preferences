@@ -5,6 +5,7 @@ namespace GeniusTS\Preferences\Models;
 
 use Illuminate\View\View;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * Class Domain
@@ -112,14 +113,7 @@ class Domain
      */
     public function removeElement($element)
     {
-        if ($element instanceof Element)
-        {
-            $key = $element->name;
-        }
-        else
-        {
-            $key = $element;
-        }
+        $key = $element instanceof Element ? $element->name : $element;
 
         $this->elements->reject(function ($value) use ($key) {
             return $value->name === $key;
@@ -135,7 +129,7 @@ class Domain
      */
     public function getDisplayedName()
     {
-        return trans($this->label ?: $this->key);
+        return Lang::get($this->label ?: $this->key);
     }
 
     /**
