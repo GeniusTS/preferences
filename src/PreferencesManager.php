@@ -36,7 +36,7 @@ class PreferencesManager
     {
         if ($this->checkNameSpace($domain->key))
         {
-            throw new DomainAlreadyExist();
+            throw new DomainAlreadyExist;
         }
 
         $this->domains->push($domain);
@@ -53,14 +53,7 @@ class PreferencesManager
      */
     public function removeDomain($domain)
     {
-        if ($domain instanceof $domain)
-        {
-            $key = $domain->key;
-        }
-        else
-        {
-            $key = $domain;
-        }
+        $key = $domain instanceof Domain ? $domain->key : $domain;
 
         $this->domains->reject(function ($value) use ($key) {
             return $value->key === $key;
@@ -81,7 +74,7 @@ class PreferencesManager
     {
         if (! $this->checkNameSpace($key))
         {
-            throw new DomainNotExist();
+            throw new DomainNotExist;
         }
 
         return $this->domains->first(function ($domain) use ($key) {
@@ -96,12 +89,7 @@ class PreferencesManager
      */
     protected function checkNameSpace($key)
     {
-        if (! $this->domains->where('key', $key)->count())
-        {
-            return false;
-        }
-
-        return true;
+        return (bool) $this->domains->where('key', $key)->count();
     }
 
     /**
