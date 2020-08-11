@@ -139,7 +139,7 @@ config('preferences.general.project_name');
 1. update inputs name inside preferences views. 
 Ex: You have a `general` domain that have `project_name` element, then the input name should be `general[project_name]`.
 
-2. Update `edit` and `handleSuccessResponse` methods of `SettingsController` inside your project.
+2. Update declaration of `edit` and `handleSuccessResponse` methods of `SettingsController` inside your project.
 ```php
    public function edit($domain = null) {
         // Logic here
