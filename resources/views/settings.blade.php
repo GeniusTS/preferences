@@ -1,4 +1,4 @@
-<form method="POST" action="{{ action('SettingsController@update') }}">
+<form method="POST" action="{{ action('SettingsController@update', $domain ? [$domain->key] : []) }}">
     @if($errors->count())
         <div class="alert alert-danger alert-dismissible fade in">
             <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
@@ -16,10 +16,16 @@
     <input type="hidden" name="_method" value="PATCH"/>
     {!! csrf_field() !!}
 
-    @if(version_compare($version, '5.3.0') < 0)
-        @include('geniusts_preferences::settings_5_2')
+    @if($domain)
+        <div>
+            {!! $domain->view->render() !!}
+        </div>
     @else
-        @include('geniusts_preferences::settings_5_3')
+        @if(version_compare($version, '5.3.0') < 0)
+            @include('geniusts_preferences::settings_5_2')
+        @else
+            @include('geniusts_preferences::settings_5_3')
+        @endif
     @endif
 
     <div class="row">
