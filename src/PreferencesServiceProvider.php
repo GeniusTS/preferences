@@ -4,6 +4,7 @@ namespace GeniusTS\Preferences;
 
 
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -41,6 +42,16 @@ class PreferencesServiceProvider extends ServiceProvider
     {
         $this->app->singleton('preferences', function () {
             return new PreferencesManager();
+        });
+
+        Route::bind('preferences_domain', function ($value) {
+            return $this->app['preferences']->getDomain($value);
+        });
+
+        Route::bind('preferences_element', function ($value) {
+            $domain = Route::current()->parameter('preferences_domain');
+
+            return $domain->getElement($value);
         });
 
         View::composer('geniusts_preferences::settings', function ($view) {
