@@ -3,6 +3,7 @@
 namespace GeniusTS\Preferences\Models;
 
 
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 
 /**
@@ -28,28 +29,20 @@ class Element
     protected $namespace;
 
     /**
-     * @var string
+     * @var \Illuminate\Support\Collection
      */
     protected $rules;
 
     /**
      * Element constructor.
      *
-     * @param string $name
-     * @param string $rules
+     * @param string       $name
+     * @param array|string $rules
      */
     public function __construct($name, $rules = '')
     {
         $this->name = $name;
-
-        if (is_array($rules))
-        {
-            $this->rules = $rules;
-        }
-        else
-        {
-            $this->rules = [$name => $rules];
-        }
+        $this->rules = new Collection(is_array($rules) ? $rules : [$name => $rules]);
     }
 
     /**
