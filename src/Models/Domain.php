@@ -6,6 +6,7 @@ namespace GeniusTS\Preferences\Models;
 use Illuminate\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Lang;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class Domain
@@ -105,6 +106,37 @@ class Domain
     }
 
     /**
+     * return a specific element
+     *
+     * @param string $name
+     *
+     * @return \GeniusTS\Preferences\Models\Element
+     */
+    public function getElement($name)
+    {
+        if (! $element = $this->checkElement($name))
+        {
+            throw new NotFoundHttpException('Element does not exists in this Domain!');
+        }
+
+        return $element;
+    }
+
+    /**
+     * Check if domain fas a specific element
+     *
+     * @param string $name
+     *
+     * @return \GeniusTS\Preferences\Models\Element|null
+     */
+    protected function checkElement($name)
+    {
+        return $this->elements->first(function ($element) use ($name) {
+            return $element->name === $name;
+        });
+    }
+
+    /**
      * remove input element
      *
      * @param string|Element $element
@@ -140,7 +172,19 @@ class Domain
     public function getRules()
     {
         $this->elements->map(function (Element $element) {
-            $this->rules = $this->rules->merge($element->rules);
+            $element->rules->map(function ($value, $key) use ($element) {
+                if (! preg_match("/^{$element->name}(\..*)?$/", $key))
+                {
+                    $key = "{$element->name}.$key";
+                }
+
+                if (! preg_match("/^{$this->key}./", $key))
+                {
+                    $key = "{$this->key}.$key";
+                }
+
+                $this->rules->put($key, $value);
+            });
         });
 
         return $this->rules;
