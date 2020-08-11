@@ -5,8 +5,8 @@ namespace GeniusTS\Preferences;
 
 use Illuminate\Support\Collection;
 use GeniusTS\Preferences\Models\Domain;
-use GeniusTS\Preferences\Exceptions\DomainNotExist;
 use GeniusTS\Preferences\Exceptions\DomainAlreadyExist;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PreferencesManager
 {
@@ -34,7 +34,7 @@ class PreferencesManager
      */
     public function addDomain(Domain $domain)
     {
-        if ($this->checkNameSpace($domain->key))
+        if ($this->checkNamespace($domain->key))
         {
             throw new DomainAlreadyExist;
         }
@@ -68,28 +68,27 @@ class PreferencesManager
      * @param string $key
      *
      * @return \GeniusTS\Preferences\Models\Domain
-     * @throws \GeniusTS\Preferences\Exceptions\DomainNotExist
      */
     public function getDomain($key)
     {
-        if (! $this->checkNameSpace($key))
+        if (! $domain = $this->checkNamespace($key))
         {
-            throw new DomainNotExist;
+            throw new NotFoundHttpException('Preferences Domain not found!');
         }
 
-        return $this->domains->first(function ($domain) use ($key) {
-            return $domain->key === $key;
-        });
+        return $domain;
     }
 
     /**
      * @param $key
      *
-     * @return bool
+     * @return \GeniusTS\Preferences\Models\Domain|null
      */
-    protected function checkNameSpace($key)
+    protected function checkNamespace($key)
     {
-        return (bool) $this->domains->where('key', $key)->count();
+        return $this->domains->first(function ($domain) use ($key) {
+            return $domain->key === $key;
+        });
     }
 
     /**
