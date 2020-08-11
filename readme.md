@@ -1,4 +1,4 @@
-# Preferences page for Laravel 5
+# Preferences page for Laravel
 
 This package to generate a preferences page to the application,
 specially if you have many component that have a different settings 
@@ -22,7 +22,7 @@ functions of laravel.
 ```json
 {
     "require": {
-        "geniusts/preferences": "~1.1.0"
+        "geniusts/preferences": "^2.0"
     }
 }
 ```
@@ -55,16 +55,17 @@ No need to publish the migrations files just run migrate command to execute the 
 
     php artisan migrate
 
-> If you want to use `DB` transaction while saving the data, add `protected $transactions = true;` to `SettingsController`
+> If you want to use `DB` transaction while saving the data, add `protected $transactions = true;` to `SettingsController`.
+
 
 4. ***Routes and views***
 
 Add two routes to you routes file:
     
-    Route::get('/settings', 'SettingsController@edit')
+    Route::get('/settings/{preferences_domain?}', 'SettingsController@edit')
         ->midllware(//Apply your middleware)
         
-    Route::patch('/settings', 'SettingsController@update')
+    Route::patch('/settings/{preferences_domain?}/{preferences_element?}', 'SettingsController@update')
         ->midllware(//Apply your middleware)
         
 Now you have to create a `preferences.settings` view with your app layout
@@ -90,8 +91,8 @@ Ex.: `settings/general.blade.php`
                     </div>
     
                     <input class="form-control" 
-                           name="project_name"
-                           value="{{ old('project_name', config('preferences.general.project_name')) }}">
+                           name="general[project_name]"
+                           value="{{ old('general.project_name', config('preferences.general.project_name')) }}">
                 </div>
             </div>
         </div>
@@ -132,6 +133,21 @@ your settings: `config('preferences.{domain}.{element}')`
 
 ```php
 config('preferences.general.project_name');
+```
+## Migration from version 1
+
+1. update inputs name inside preferences views. 
+Ex: You have a `general` domain that have `project_name` element, then the input name should be `general[project_name]`.
+
+2. Update `edit` and `handleSuccessResponse` methods of `SettingsController` inside your project.
+```php
+   public function edit($domain = null) {
+        // Logic here
+   }
+       
+    protected function handleSuccessResponse($domain, $element) {
+        // Logic here    
+    }
 ```
 
 ## License
