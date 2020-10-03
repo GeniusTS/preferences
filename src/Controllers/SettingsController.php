@@ -4,6 +4,7 @@ namespace GeniusTS\Preferences\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
@@ -43,11 +44,18 @@ abstract class SettingsController extends Controller
     protected $preferences;
 
     /**
+     * @var string
+     */
+    protected $dispatch_method;
+
+    /**
      * SettingsController constructor.
      */
     public function __construct()
     {
         $this->preferences = resolve('preferences');
+        $this->dispatch_method = method_exists(Dispatcher::class, 'fire') ? 'fire' : 'dispatch';
+
     }
 
     /**
@@ -91,7 +99,7 @@ abstract class SettingsController extends Controller
      */
     protected function process(Request $request, Domain $domain = null, Element $element = null)
     {
-        Event::fire(new BeforeUpdatePreference);
+        Event::{$this->dispatch_method}(new BeforeUpdatePreference);
 
         if ($element)
         {
@@ -109,7 +117,7 @@ abstract class SettingsController extends Controller
             }
         }
 
-        Event::fire(new PreferencesUpdated);
+        Event::{$this->dispatch_method}(new PreferencesUpdated);
     }
 
     /**
