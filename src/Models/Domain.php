@@ -178,7 +178,7 @@ class Domain
                     $key = "{$element->name}.$key";
                 }
 
-                if (! preg_match("/^{$this->key}./", $key))
+                if (! preg_match("/^{$this->key}\./", $key))
                 {
                     $key = "{$this->key}.$key";
                 }
