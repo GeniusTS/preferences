@@ -53,11 +53,11 @@ class Domain
     /**
      * Tab constructor.
      *
-     * @param string $key
-     * @param View   $view
-     * @param null   $label
+     * @param string      $key
+     * @param View|string $view
+     * @param null        $label
      */
-    public function __construct($key, View $view, $label = null)
+    public function __construct($key, $view, $label = null)
     {
         $this->key = $key;
         $this->view = $view;
@@ -114,8 +114,7 @@ class Domain
      */
     public function getElement($name)
     {
-        if (! $element = $this->checkElement($name))
-        {
+        if (!$element = $this->checkElement($name)) {
             throw new NotFoundHttpException('Element does not exists in this Domain!');
         }
 
@@ -173,13 +172,11 @@ class Domain
     {
         $this->elements->map(function (Element $element) {
             $element->rules->map(function ($value, $key) use ($element) {
-                if (! preg_match("/^{$element->name}(\..*)?$/", $key))
-                {
+                if (!preg_match("/^{$element->name}(\..*)?$/", $key)) {
                     $key = "{$element->name}.$key";
                 }
 
-                if (! preg_match("/^{$this->key}\./", $key))
-                {
+                if (!preg_match("/^{$this->key}\./", $key)) {
                     $key = "{$this->key}.$key";
                 }
 
@@ -197,8 +194,11 @@ class Domain
      */
     public function __get($property)
     {
-        if (property_exists($this, $property))
-        {
+        if ($property === 'view') {
+            return $this->view && is_string($this->view) ? view($this->view) : $this->view;
+        }
+
+        if (property_exists($this, $property)) {
             return $this->{$property};
         }
 
